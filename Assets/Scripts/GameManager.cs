@@ -4,28 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //public TriviaManager triviaManager;
-
-    public List<question> responseList; //lista donde guardo la respuesta de la query hecha en la pantalla de selección de categoría
-
+    public List<question> responseList;
     public int currentTriviaIndex = 0;
-
     public int randomQuestionIndex = 0;
-
     public List<string> _answers = new List<string>();
-
     public bool queryCalled;
-
     private int _points;
-
-    private int _maxAttempts = 10;
-
     public int _numQuestionAnswered = 0;
-
     string _correctAnswer;
-
     public static GameManager Instance { get; private set; }
-
+    private HashSet<int> _askedQuestions = new HashSet<int>();
 
     void Awake()
     {
@@ -33,31 +21,22 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Para mantener el objeto entre escenas
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-
     }
-
 
     void Start()
     {
-
         StartTrivia();
-
         queryCalled = false;
-
     }
 
     void StartTrivia()
     {
-        // Cargar la trivia desde la base de datos
-        //triviaManager.LoadTrivia(currentTriviaIndex);
-
-        //print(responseList.Count);
 
     }
 
@@ -67,43 +46,36 @@ public class GameManager : MonoBehaviour
 
         if (!isCalled)
         {
+            do
+            {
+                randomQuestionIndex = Random.Range(0, responseList.Count);
+            } while (_askedQuestions.Contains(randomQuestionIndex));
 
-            randomQuestionIndex = Random.Range(0, GameManager.Instance.responseList.Count);
+            _correctAnswer = responseList[randomQuestionIndex].CorrectOption;
 
-            //_questionText.text = GameManager.Instance.responseList[randomQuestionIndex].QuestionText;
-            _correctAnswer = GameManager.Instance.responseList[randomQuestionIndex].CorrectOption;
-
-            //agrego a la lista de answers las 3 answers
-
-            _answers.Add(GameManager.Instance.responseList[randomQuestionIndex].Answer1);
-            _answers.Add(GameManager.Instance.responseList[randomQuestionIndex].Answer2);
-            _answers.Add(GameManager.Instance.responseList[randomQuestionIndex].Answer3);
-
-            // la mixeo con el método Shuffle (ver script Shuffle List)
+            _answers.Clear();
+            _answers.Add(responseList[randomQuestionIndex].Answer1);
+            _answers.Add(responseList[randomQuestionIndex].Answer2);
+            _answers.Add(responseList[randomQuestionIndex].Answer3);
 
             _answers.Shuffle();
-
-            // asigno estos elementos a los textos de los botones
 
             for (int i = 0; i < UIManagment.Instance._buttons.Length; i++)
             {
                 UIManagment.Instance._buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = _answers[i];
 
-                int index = i; // Captura el valor actual de i en una variable local -- SINO NO FUNCA!
-
+                int index = i;
+                UIManagment.Instance._buttons[i].onClick.RemoveAllListeners(); 
                 UIManagment.Instance._buttons[i].onClick.AddListener(() => UIManagment.Instance.OnButtonClick(index));
             }
 
-
+            _askedQuestions.Add(randomQuestionIndex); 
             UIManagment.Instance.queryCalled = true;
         }
-
     }
-
 
     private void Update()
     {
         
     }
 }
-

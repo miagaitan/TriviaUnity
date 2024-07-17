@@ -10,11 +10,12 @@ using UnityEngine.SceneManagement;
 
 public class TriviaSelection : MonoBehaviour
 {
-    string supabaseUrl = "url"; //COMPLETAR
-    string supabaseKey = "key"; //COMPLETAR
+    string supabaseUrl = "https://uzfacolewgnmhebpfulo.supabase.co";
+    string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6ZmFjb2xld2dubWhlYnBmdWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYyNTc0MDUsImV4cCI6MjAzMTgzMzQwNX0.gWx7SFGIvhve1FoG98yIV5H_9koMoLM4JQuG_ncARCA"; //COMPLETAR
 
     Supabase.Client clientSupabase;
-
+    public static int triviaSelected { get; private set; }
+    public static TriviaSelection Instance { get; private set; }
     List<trivia> trivias = new List<trivia>();
     [SerializeField] TMP_Dropdown _dropdown;
 
@@ -38,11 +39,6 @@ public class TriviaSelection : MonoBehaviour
         if (response != null)
         {
             trivias = response.Models;
-            //Debug.Log("Trivias seleccionadas: " + trivias.Count);
-            //foreach (var trivia in trivias)
-            //{
-            //    Debug.Log("ID: " + trivia.id + ", Categoría: " + trivia.category);
-            //}
         }
 
     }
@@ -66,12 +62,18 @@ public class TriviaSelection : MonoBehaviour
     {
         int selectedIndex = _dropdown.value;
         string selectedTrivia = _dropdown.options[selectedIndex].text;
+        triviaSelected = trivias[selectedIndex].id;
 
         PlayerPrefs.SetInt("SelectedIndex", selectedIndex+1);
         PlayerPrefs.SetString("SelectedTrivia", selectedTrivia);
 
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void RankingButton()
+    {
+        SceneManager.LoadScene("Ranking");
     }
 
 }

@@ -7,8 +7,8 @@ using Postgrest.Models;
 
 public class DatabaseManager : MonoBehaviour
 {
-    string supabaseUrl = "url"; //COMPLETAR
-    string supabaseKey = "key"; //COMPLETAR
+    string supabaseUrl = "https://uzfacolewgnmhebpfulo.supabase.co"; 
+    string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6ZmFjb2xld2dubWhlYnBmdWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYyNTc0MDUsImV4cCI6MjAzMTgzMzQwNX0.gWx7SFGIvhve1FoG98yIV5H_9koMoLM4JQuG_ncARCA"; 
 
     Supabase.Client clientSupabase;
 
@@ -21,11 +21,7 @@ public class DatabaseManager : MonoBehaviour
     async void Start()
     {
         clientSupabase = new Supabase.Client(supabaseUrl, supabaseKey);
-        
         index = PlayerPrefs.GetInt("SelectedIndex");
-
-        //print(_selectedTrivia);
-
         await LoadTriviaData(index);
     }
 
