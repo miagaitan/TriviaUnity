@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class UIManagment : MonoBehaviour
 {
-    string supabaseUrl = "https://uzfacolewgnmhebpfulo.supabase.co";
-    string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6ZmFjb2xld2dubWhlYnBmdWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYyNTc0MDUsImV4cCI6MjAzMTgzMzQwNX0.gWx7SFGIvhve1FoG98yIV5H_9koMoLM4JQuG_ncARCA";
+    string supabaseUrl = "https://vdmvxiswfvbmrcadujzt.supabase.co";
+    string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkbXZ4aXN3ZnZibXJjYWR1anp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxNDYzNjksImV4cCI6MjA0NzcyMjM2OX0.EJJpHJsRidOCyICa7fN7tGdHx7o6BkxLYc6VxgGztfI";
 
     Supabase.Client clientSupabase;
 
@@ -83,7 +83,7 @@ public class UIManagment : MonoBehaviour
 
         if (selectedAnswer == _correctAnswer)
         {
-            Debug.Log("¡Respuesta correcta!");
+            Debug.Log("ï¿½Respuesta correcta!");
             currentPoints += Mathf.RoundToInt(currentTimer);
             ChangeButtonColor(buttonIndex, Color.green);
             Invoke("RestoreButtonColor", 2f);
@@ -94,7 +94,7 @@ public class UIManagment : MonoBehaviour
         }
         else
         {
-            Debug.Log("Respuesta incorrecta. Inténtalo de nuevo.");
+            Debug.Log("Respuesta incorrecta. Intï¿½ntalo de nuevo.");
             ChangeButtonColor(buttonIndex, Color.red);
             Invoke("HandleFailure", 1f);
         }
